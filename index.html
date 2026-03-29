@@ -26,31 +26,13 @@
         
         .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
         .nav-link { transition: color 0.3s ease; }
-        .nav-link:hover { color: #4f46e5; }
+        .nav-link:hover { color: #dc2626; }
         
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
-
-    <!-- Chosen Palette: Warm Neutrals with Red (#dc2626) and Amber/Yellow (#f59e0b) accents. Slate for text and structural elements. -->
-    
-    <!-- Application Structure Plan: The SPA uses a logical, top-down scrollable structure designed for stakeholders (teachers, parents, management). 
-    1. Hero: Immediate context and vision. 
-    2. Pilares Educativos: Interactive cards explaining the core philosophy (STEAM, Citizenship), prioritizing the 'why'. 
-    3. Ruta de Aprendizaje (Inicial/Primaria): Tabbed interface to show the pedagogical progression by age. 
-    4. Ecosistema Secundaria: Dashboard-style section combining a filterable project table with a Donut chart to analyze the technological focus (Robotics vs Web, etc.). 
-    5. Gestión y Recursos: Accordion format to organize the TIC Coordinator's expansive role and hardware specs cleanly. -->
-    
-    <!-- Visualization & Content Choices: 
-    - Pilares: CSS interactive cards -> Goal: Inform/Engage -> Allows reading details without cluttering the view. (No SVG).
-    - Progresión Primaria: JS Tabs -> Goal: Organize/Compare -> Shows age-appropriate progression clearly. (No SVG).
-    - Proyectos Secundaria: Chart.js Donut Chart + JS Filterable Table -> Goal: Analyze/Inform -> Donut chart shows the distribution of tech focus (Robotics vs Web). Table allows exploring specific projects by grade. (Chart.js / No SVG).
-    - Gestión TIC: JS Accordions -> Goal: Organize -> Keeps extensive administrative text readable and structured. (No SVG). -->
-
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
 
@@ -60,23 +42,25 @@
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
                     <img src="image_99719f.png" alt="Logo Colegio San José" class="h-10 md:h-12 w-auto drop-shadow-sm hover:scale-105 transition-transform" onerror="this.onerror=null; this.src='https://placehold.co/250x50/dc2626/ffffff?text=Colegio+San+Jose';">
                 </div>
-                <div class="hidden md:flex space-x-8">
+                <div class="hidden lg:flex space-x-6">
                     <a href="#fundamentacion" class="nav-link text-slate-600 font-medium text-sm">Fundamentación</a>
                     <a href="#ruta" class="nav-link text-slate-600 font-medium text-sm">Inicial y Primaria</a>
-                    <a href="#secundaria" class="nav-link text-slate-600 font-medium text-sm">Proyectos Secundaria</a>
-                    <a href="#gestion" class="nav-link text-slate-600 font-medium text-sm">Gestión y Recursos</a>
+                    <a href="#secundaria" class="nav-link text-slate-600 font-medium text-sm">Secundaria</a>
+                    <a href="#actividades" class="nav-link text-slate-600 font-medium text-sm">Otras Actividades</a>
+                    <a href="#gestion" class="nav-link text-slate-600 font-medium text-sm">Gestión</a>
                 </div>
-                <div class="md:hidden flex items-center">
+                <div class="lg:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-slate-600 hover:text-red-600 focus:outline-none text-2xl">
                         ☰
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-4 pt-2 pb-4 space-y-1 shadow-lg">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 px-4 pt-2 pb-4 space-y-1 shadow-lg">
             <a href="#fundamentacion" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Fundamentación</a>
             <a href="#ruta" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Inicial y Primaria</a>
             <a href="#secundaria" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Secundaria</a>
+            <a href="#actividades" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Otras Actividades</a>
             <a href="#gestion" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Gestión y Recursos</a>
         </div>
     </nav>
@@ -128,7 +112,7 @@
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-3xl font-bold text-slate-900 mb-4">Fundamentación y Pilares</h2>
                 <p class="text-slate-600 text-lg">
-                    Trascendemos la enseñanza instrumental. Basados en los NAP de Educación Digital y el Diseño Curricular de Córdoba, articulamos estrategias para transformar la tecnología en un puente de innovación y valores.
+                    Trascendemos la enseñanza instrumental. Basados en los NAP de Educación Digital y el Diseño Curricular de Córdoba, articulamos estrategias para transformar la tecnología en un puente de innovación y valores. Además, se trabajará de forma específica con los contenidos del aula y con la especificidad de Informática, articulando estrategias y recursos para su integración en cada ciclo y nivel.
                 </p>
             </div>
             
@@ -154,6 +138,67 @@
                     <p class="text-slate-600 text-sm">Conciencia sobre la huella digital, privacidad y uso ético de la información, promoviendo creadores tecnológicos responsables.</p>
                 </div>
             </div>
+
+            <!-- NUEVO BLOQUE: Marco Metodológico y TIC -->
+            <div class="mt-16 grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Estrategias -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xl">🎯</span>
+                        Estrategias de Implementación
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700"><strong>Aprendizaje basado en proyectos (ABP)</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700"><strong>Resolución de problemas</strong> en contextos reales.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700"><strong>Trabajo colaborativo</strong> y construcción colectiva.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700"><strong>Integración de TIC</strong> en diferentes áreas curriculares de forma transversal.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700">Uso activo de <strong>entornos virtuales de aprendizaje</strong>.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Abordaje TIC -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-xl">🛠️</span>
+                        Abordaje de las TIC
+                    </h3>
+                    <p class="text-slate-600 mb-4 font-medium">Las herramientas tecnológicas serán abordadas como:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="text-amber-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700"><strong>Medio de indagación:</strong> Búsqueda, filtrado y análisis crítico de la información.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-amber-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700"><strong>Medio de producción:</strong> Creación de documentos, presentaciones y programación.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-amber-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700"><strong>Medio de comunicación:</strong> Interacción asincrónica y sincrónica en plataformas virtuales.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-amber-500 mt-1 font-bold">✓</span>
+                            <span class="text-slate-700"><strong>Medio de simulación:</strong> Modelado a través de software educativo específico.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
         </div>
     </section>
 
@@ -309,6 +354,82 @@
         </div>
     </section>
 
+    <!-- NUEVA SECCIÓN: Otras Actividades -->
+    <section id="actividades" class="py-20 bg-amber-50 border-y border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 text-center md:text-left">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Otras Actividades Institucionales</h2>
+                <p class="text-slate-600 max-w-3xl">
+                    Iniciativas complementarias que enriquecen el ecosistema digital del colegio, conectando a los estudiantes con expertos internacionales y fomentando la innovación transversal.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Charla -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-2xl mb-4">🎙️</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Charlas y Encuentros</h3>
+                    <ul class="text-slate-600 text-sm space-y-4">
+                        <li class="flex items-start gap-2">
+                            <span class="text-red-500 font-bold mt-0.5">•</span> 
+                            <div>
+                                <span>Encuentro virtual con <strong>Adrián Zucco</strong> (Alemania).</span>
+                                <div class="inline-block mt-2 px-2 py-1 bg-red-50 text-red-700 border border-red-100 rounded text-xs font-medium">
+                                    Tema: IA en partículas de aire
+                                </div>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-red-500 font-bold mt-0.5">•</span> 
+                            <div>
+                                <span><strong>Actividades con el FAMAF</strong></span>
+                                <div class="inline-block mt-2 px-2 py-1 bg-red-50 text-red-700 border border-red-100 rounded text-xs font-medium">
+                                    Vinculación Universitaria (UNC)
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Sistemas -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-2xl mb-4">⚙️</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Desarrollo de Sistemas</h3>
+                    <ul class="text-slate-600 text-sm space-y-3">
+                        <li class="flex items-start gap-2">
+                            <span class="text-orange-500 font-bold">•</span> 
+                            <span>Implementar el nuevo <strong>Sistema de Eventos</strong> para la gestión institucional.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-orange-500 font-bold">•</span> 
+                            <span>Evaluar la continuidad y posibles mejoras del <strong>Sistema de Biblioteca</strong>.</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Innovacion y lectura -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-2xl mb-4">👓</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Innovación </h3>
+                    <ul class="text-slate-600 text-sm space-y-3">
+                        <li class="flex items-start gap-2">
+                            <span class="text-yellow-600 font-bold">•</span> 
+                            <span>Incentivar el uso de <strong>anteojos 3D</strong> en actividades áulicas.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-yellow-600 font-bold">•</span> 
+                            <span><strong>Taller especial</strong> articulado en conjunto con la Biblioteca.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-yellow-600 font-bold">•</span> 
+                            <span>Participación activa en la <strong>Feria del Libro</strong> (Mes de Junio).</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="gestion" class="py-20 bg-slate-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 border-b border-slate-700 pb-6 text-center md:text-left">
@@ -376,7 +497,7 @@
                             <div class="accordion-content hidden px-6 py-4 text-slate-300 border-t border-slate-700 bg-slate-800/50 leading-relaxed">
                                 <ul class="list-disc pl-5 space-y-2">
                                     <li>Configuración, administración y permisos de Google Classroom.</li>
-                                    <li>Monitoreo de seguridad digital (2FA) y almacenamiento en Drive.</li>
+                                    <li>Monitoreo de seguridad digital y almacenamiento en Drive.</li>
                                     <li>Administración de cuentas institucionales y unidades organizativas.</li>
                                     <li>Soporte técnico directo a usuarios.</li>
                                 </ul>
@@ -390,10 +511,10 @@
                             </button>
                             <div class="accordion-content hidden px-6 py-4 text-slate-300 border-t border-slate-700 bg-slate-800/50 leading-relaxed">
                                 <ul class="list-disc pl-5 space-y-2">
-                                    <li>Supervisión del laboratorio de informática y mantenimiento de hardware.</li>
-                                    <li>Gestión y custodia de los Kits Arduino e insumos robóticos.</li>
+                                    <li>Supervisión de los  laboratorios de informática.</li>
+                                    <li>Gestión y custodia de los Kits Arduino e insumos.</li>
                                     <li>Gestión de la comunicación con servidores ante incidencias.</li>
-                                    <li>Actualización permanente del sitio web del colegio y novedades institucionales.</li>
+                                    <li>Actualización permanente del sitio web del colegio, Campus virtual y novedades institucionales.</li>
                                 </ul>
                             </div>
                         </div>
@@ -404,8 +525,8 @@
                                 <span class="text-2xl transition-transform duration-300 transform">+</span>
                             </button>
                             <div class="accordion-content hidden px-6 py-4 text-slate-300 border-t border-slate-700 bg-slate-800/50 leading-relaxed">
-                                <p class="mb-2"><strong>Nivel Primario:</strong> Mayra Farias, María Lucía Minoldo, Roberto Medina.</p>
-                                <p><strong>Nivel Secundario:</strong> Mártit Acuña, Gastón Ferreyra, Pablo Fala, Alejandra Sánchez, Zulema Perez, y equipo.</p>
+                                <p class="mb-2"><strong>Nivel Primario:</strong> Prof. Mayra Farias, Prof.María Lucía Minoldo, Prof. Roberto Medina.</p>
+                                <p><strong>Nivel Secundario:</strong> Prof. Mayra Farías, Prof. Marit Acuña, Prof. Gastón Ferreyra, Prof. Pablo Fala.</p>
                             </div>
                         </div>
                     </div>
@@ -631,3 +752,20 @@
     </script>
 </body>
 </html>
+        
+    
+     
+                         
+                
+              
+                   
+                           
+                                  
+                          
+                        
+                       
+
+
+
+    
+                  
