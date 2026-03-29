@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Anual de Informática 2026 - Colegio San José</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 600px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 350px; 
+            max-height: 400px; 
+        }
+        @media (min-width: 768px) { .chart-container { height: 380px; } }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .nav-link { transition: color 0.3s ease; }
+        .nav-link:hover { color: #4f46e5; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+
+    <!-- Chosen Palette: Warm Neutrals with Red (#dc2626) and Amber/Yellow (#f59e0b) accents. Slate for text and structural elements. -->
+    
+    <!-- Application Structure Plan: The SPA uses a logical, top-down scrollable structure designed for stakeholders (teachers, parents, management). 
+    1. Hero: Immediate context and vision. 
+    2. Pilares Educativos: Interactive cards explaining the core philosophy (STEAM, Citizenship), prioritizing the 'why'. 
+    3. Ruta de Aprendizaje (Inicial/Primaria): Tabbed interface to show the pedagogical progression by age. 
+    4. Ecosistema Secundaria: Dashboard-style section combining a filterable project table with a Donut chart to analyze the technological focus (Robotics vs Web, etc.). 
+    5. Gestión y Recursos: Accordion format to organize the TIC Coordinator's expansive role and hardware specs cleanly. -->
+    
+    <!-- Visualization & Content Choices: 
+    - Pilares: CSS interactive cards -> Goal: Inform/Engage -> Allows reading details without cluttering the view. (No SVG).
+    - Progresión Primaria: JS Tabs -> Goal: Organize/Compare -> Shows age-appropriate progression clearly. (No SVG).
+    - Proyectos Secundaria: Chart.js Donut Chart + JS Filterable Table -> Goal: Analyze/Inform -> Donut chart shows the distribution of tech focus (Robotics vs Web). Table allows exploring specific projects by grade. (Chart.js / No SVG).
+    - Gestión TIC: JS Accordions -> Goal: Organize -> Keeps extensive administrative text readable and structured. (No SVG). -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
+
+    <nav class="fixed w-full z-50 glass-card shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <img src="image_99719f.png" alt="Logo Colegio San José" class="h-10 md:h-12 w-auto drop-shadow-sm hover:scale-105 transition-transform" onerror="this.onerror=null; this.src='https://placehold.co/250x50/dc2626/ffffff?text=Colegio+San+Jose';">
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#fundamentacion" class="nav-link text-slate-600 font-medium text-sm">Fundamentación</a>
+                    <a href="#ruta" class="nav-link text-slate-600 font-medium text-sm">Inicial y Primaria</a>
+                    <a href="#secundaria" class="nav-link text-slate-600 font-medium text-sm">Proyectos Secundaria</a>
+                    <a href="#gestion" class="nav-link text-slate-600 font-medium text-sm">Gestión y Recursos</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-red-600 focus:outline-none text-2xl">
+                        ☰
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-4 pt-2 pb-4 space-y-1 shadow-lg">
+            <a href="#fundamentacion" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Fundamentación</a>
+            <a href="#ruta" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Inicial y Primaria</a>
+            <a href="#secundaria" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Secundaria</a>
+            <a href="#gestion" class="block px-3 py-2 text-base font-medium text-slate-700 hover:text-red-600 hover:bg-slate-50 rounded-md">Gestión y Recursos</a>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
+        <div class="flex-1 space-y-6 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm font-semibold uppercase tracking-wide">
+                <span>💡</span> Ciclo Lectivo 2026
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+                Proyecto Anual de <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-amber-500">Informática</span>
+            </h1>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto md:mx-0 font-light">
+                "Luces de Mejora". Un desafío hacia la alfabetización digital integral, formando creadores críticos y ciudadanos éticos bajo una espiritualidad de comunión.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+                <a href="#ruta" class="px-6 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition shadow-md shadow-red-200 text-center">Explorar Ruta</a>
+                <a href="#secundaria" class="px-6 py-3 bg-white text-red-600 border border-red-200 rounded-lg font-medium hover:bg-red-50 transition text-center">Ver Proyectos</a>
+            </div>
+        </div>
+        <div class="flex-1 w-full max-w-md bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-red-50 p-4 rounded-xl text-center">
+                    <div class="text-3xl mb-2">🤖</div>
+                    <div class="font-bold text-red-900">Robótica</div>
+                    <div class="text-xs text-red-600">Arduino & Maker</div>
+                </div>
+                <div class="bg-amber-50 p-4 rounded-xl text-center">
+                    <div class="text-3xl mb-2">💻</div>
+                    <div class="font-bold text-amber-900">Programación</div>
+                    <div class="text-xs text-amber-600">Bloques a Código</div>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-xl text-center">
+                    <div class="text-3xl mb-2">🌍</div>
+                    <div class="font-bold text-orange-900">Ciudadanía</div>
+                    <div class="text-xs text-orange-600">Ética Digital</div>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-xl text-center">
+                    <div class="text-3xl mb-2">📈</div>
+                    <div class="font-bold text-yellow-900">STEAM</div>
+                    <div class="text-xs text-yellow-700">Proyectos Integrales</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="fundamentacion" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Fundamentación y Pilares</h2>
+                <p class="text-slate-600 text-lg">
+                    Trascendemos la enseñanza instrumental. Basados en los NAP de Educación Digital y el Diseño Curricular de Córdoba, articulamos estrategias para transformar la tecnología en un puente de innovación y valores.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="group p-6 rounded-2xl border border-slate-200 hover:border-red-500 hover:shadow-lg transition-all duration-300 cursor-default bg-slate-50 hover:bg-white">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">⚙️</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Enfoque STEAM</h3>
+                    <p class="text-slate-600 text-sm">Metodología interdisciplinaria (Ciencia, Tecnología, Ingeniería, Arte y Matemática) orientada a la resolución de problemas reales.</p>
+                </div>
+                <div class="group p-6 rounded-2xl border border-slate-200 hover:border-amber-500 hover:shadow-lg transition-all duration-300 cursor-default bg-slate-50 hover:bg-white">
+                    <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">🎮</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Gamificación</h3>
+                    <p class="text-slate-600 text-sm">Dinámicas de juego (desafíos, misiones, niveles) como recurso didáctico para aumentar la motivación y el compromiso.</p>
+                </div>
+                <div class="group p-6 rounded-2xl border border-slate-200 hover:border-orange-500 hover:shadow-lg transition-all duration-300 cursor-default bg-slate-50 hover:bg-white">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">🧠</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Pensamiento Computacional</h3>
+                    <p class="text-slate-600 text-sm">Desarrollo de algoritmia, abstracción y patrones fomentando el pensamiento lógico a través de la programación.</p>
+                </div>
+                <div class="group p-6 rounded-2xl border border-slate-200 hover:border-yellow-500 hover:shadow-lg transition-all duration-300 cursor-default bg-slate-50 hover:bg-white">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">🛡️</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Ciudadanía Digital</h3>
+                    <p class="text-slate-600 text-sm">Conciencia sobre la huella digital, privacidad y uso ético de la información, promoviendo creadores tecnológicos responsables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ruta" class="py-20 bg-slate-50 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Ruta de Aprendizaje: Inicial y Primaria</h2>
+                <p class="text-slate-600 max-w-3xl">
+                    Conoce cómo evolucionan las herramientas y metodologías tecnológicas a medida que los estudiantes crecen. Navega por las diferentes etapas para descubrir los objetivos de cada ciclo.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/3 flex flex-col space-y-2" id="tab-buttons">
+                    <button class="text-left px-5 py-4 rounded-xl font-semibold transition-all duration-200 bg-red-600 text-white shadow-md border border-red-600 flex items-center gap-3" data-target="tab-1">
+                        <span class="text-xl">👶</span> Salas 4 y 5
+                    </button>
+                    <button class="text-left px-5 py-4 rounded-xl font-semibold transition-all duration-200 bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 flex items-center gap-3" data-target="tab-2">
+                        <span class="text-xl">🎒</span> Primer Ciclo
+                    </button>
+                    <button class="text-left px-5 py-4 rounded-xl font-semibold transition-all duration-200 bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 flex items-center gap-3" data-target="tab-3">
+                        <span class="text-xl">📚</span> Segundo Ciclo
+                    </button>
+                    <button class="text-left px-5 py-4 rounded-xl font-semibold transition-all duration-200 bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 flex items-center gap-3" data-target="tab-4">
+                        <span class="text-xl">🛠️</span> Sexto Grado (Destacado)
+                    </button>
+                </div>
+
+                <div class="lg:w-2/3 bg-white p-8 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden min-h-[300px]">
+                    <div id="tab-1" class="tab-content active">
+                        <div class="inline-block px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Nivel Inicial</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Iniciación Lúdica al Pensamiento Computacional</h3>
+                        <p class="text-slate-600 mb-6 leading-relaxed">En esta etapa fundamental, los niños comienzan a entender la secuenciación y la lógica básica a través del juego y la exploración física y digital simple.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-500 mt-1">✓</span>
+                                <span class="text-slate-700"><strong>Roberto el Robot:</strong> Actividades de robótica sin pantallas para entender instrucciones espaciales.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-500 mt-1">✓</span>
+                                <span class="text-slate-700"><strong>Juegos de Secuencias:</strong> Fomento del pensamiento lógico a través del ordenamiento lúdico.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-500 mt-1">✓</span>
+                                <span class="text-slate-700"><strong>Scratch Juniors (Sala 5):</strong> Primeros acercamientos a la programación visual mediante bloques icónicos.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="tab-2" class="tab-content">
+                        <div class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Primaria</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Estructuras Básicas y Algoritmia</h3>
+                        <p class="text-slate-600 mb-6 leading-relaxed">Los estudiantes desarrollan la capacidad de resolver problemas dividiéndolos en pasos lógicos, utilizando herramientas diseñadas para la alfabetización digital temprana.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-500 mt-1">✓</span>
+                                <span class="text-slate-700"><strong>Pilas Bloques:</strong> Entorno de programación desarrollado para aprender a programar resolviendo desafíos y aplicando conceptos de algoritmia.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-500 mt-1">✓</span>
+                                <span class="text-slate-700"><strong>Scratch Junior:</strong> Creación de historias interactivas y juegos simples, consolidando el razonamiento espacial y temporal.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="tab-3" class="tab-content">
+                        <div class="inline-block px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Primaria</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Lógica Condicional y Variables</h3>
+                        <p class="text-slate-600 mb-6 leading-relaxed">Se introduce mayor complejidad en la programación. Los estudiantes pasan de secuencias simples a programas que toman decisiones y almacenan datos.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-500 mt-1">✓</span>
+                                <span class="text-slate-700"><strong>Scratch:</strong> Transición a la plataforma principal de bloques.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-500 mt-1">✓</span>
+                                <span class="text-slate-700"><strong>Variables:</strong> Comprensión del almacenamiento temporal de datos (puntuaciones, cronómetros).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-500 mt-1">✓</span>
+                                <span class="text-slate-700"><strong>Condicionales:</strong> Uso de estructuras "Si... entonces" para dotar de inteligencia a los proyectos interactivos.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="tab-4" class="tab-content">
+                        <div class="inline-block px-3 py-1 bg-rose-100 text-rose-800 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Proyecto Articulador</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Integración Hardware y Software (Placas Maker)</h3>
+                        <p class="text-slate-600 mb-4 leading-relaxed">Un proyecto de integración pedagógica liderado por Lucía Minoldo, Mayra Faría y Roberto Medina. Articula informática con robótica para resolver problemas reales.</p>
+                        <div class="bg-red-50 p-4 rounded-lg border border-red-100 mt-4">
+                            <h4 class="font-bold text-red-900 mb-2">Componentes del Proyecto:</h4>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-slate-700">
+                                <div class="flex items-center gap-2">🔌 Placas Maker Maker</div>
+                                <div class="flex items-center gap-2">📡 Sensores y Actuadores</div>
+                                <div class="flex items-center gap-2">🧩 Programación por Bloques</div>
+                                <div class="flex items-center gap-2">🗣️ Comunicación de Soluciones</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="secundaria" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Ecosistema de Proyectos: Secundaria</h2>
+                <p class="text-slate-600 max-w-3xl">
+                    Este panel interactivo detalla el cronograma de proyectos para el Nivel Secundario. Explora la distribución temática mediante el gráfico o filtra la tabla para descubrir iniciativas específicas de cada curso, desde simulaciones Arduino hasta desarrollo Web y competiciones robóticas.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-1 bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col items-center shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 self-start w-full border-b pb-2">Distribución Temática</h3>
+                    <div class="chart-container w-full">
+                        <canvas id="projectsChart"></canvas>
+                    </div>
+                    <div class="mt-6 text-sm text-slate-500 text-center w-full">
+                        Distribución de enfoques metodológicos en los 12 proyectos principales planificados.
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 flex flex-col">
+                    <div class="flex flex-wrap gap-2 mb-6" id="filter-container">
+                        <button class="filter-btn active px-4 py-2 rounded-lg text-sm font-semibold bg-red-600 text-white shadow-sm transition-colors" data-filter="Todos">Todos</button>
+                        <button class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors" data-filter="Programación/Web">Programación/Web</button>
+                        <button class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors" data-filter="Robótica">Robótica/Hardware</button>
+                        <button class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors" data-filter="Simulación/Audiovisual">Simulación/Audiovisual</button>
+                    </div>
+
+                    <div class="overflow-x-auto bg-white border border-slate-200 rounded-xl shadow-sm h-full">
+                        <table class="min-w-full divide-y divide-slate-200">
+                            <thead class="bg-slate-50 sticky top-0">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Curso</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Proyecto / Temática</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider hidden md:table-cell">Docente(s)</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Período</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-slate-200" id="projects-table-body">
+                            </tbody>
+                        </table>
+                        <div id="empty-state" class="hidden py-8 text-center text-slate-500">
+                            No se encontraron proyectos para esta categoría.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gestion" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 border-b border-slate-700 pb-6 text-center md:text-left">
+                <h2 class="text-3xl font-bold mb-4">Liderazgo TIC, Gestión y Recursos</h2>
+                <p class="text-slate-400 max-w-3xl">
+                    El éxito del proyecto recae en una sólida infraestructura material y un acompañamiento docente continuo. El rol del Coordinador TIC se expande hacia el asesoramiento pedagógico y la gestión técnica integral.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-12">
+                <div class="md:col-span-5 space-y-8">
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">💻</span>
+                            <h3 class="text-xl font-bold">Hardware y Equipamiento</h3>
+                        </div>
+                        <ul class="space-y-3 text-slate-300">
+                            <li class="flex items-center gap-2"><span class="text-amber-400">•</span> Kits Arduino UNO R3 completos</li>
+                            <li class="flex items-center gap-2"><span class="text-amber-400">•</span> Placas NodeMCU ESP32 (WiFi/BT)</li>
+                            <li class="flex items-center gap-2"><span class="text-amber-400">•</span> Módulos transceptores LoRa SX1278</li>
+                            <li class="flex items-center gap-2"><span class="text-amber-400">•</span> Placas Maker Maker (Primaria)</li>
+                            <li class="flex items-center gap-2"><span class="text-amber-400">•</span> Kits de sensores Arduino (37+)</li>
+                            <li class="flex items-center gap-2"><span class="text-amber-400">•</span> Mantenimiento del Laboratorio</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">☁️</span>
+                            <h3 class="text-xl font-bold">Plataformas y Conectividad</h3>
+                        </div>
+                        <ul class="space-y-3 text-slate-300">
+                            <li class="flex items-center gap-2"><span class="text-red-400">•</span> Google Workspace Institucional</li>
+                            <li class="flex items-center gap-2"><span class="text-red-400">•</span> Entornos Virtuales: Moodle & Classroom</li>
+                            <li class="flex items-center gap-2"><span class="text-red-400">•</span> Tinkercad (Simulación)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="md:col-span-7">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <span>👥</span> Dimensiones de la Coordinación TIC
+                    </h3>
+                    
+                    <div class="space-y-4" id="accordion-container">
+                        <div class="border border-slate-700 rounded-xl overflow-hidden bg-slate-800 transition-all">
+                            <button class="accordion-btn w-full px-6 py-4 text-left font-bold text-lg flex justify-between items-center focus:outline-none hover:bg-slate-700">
+                                <span>Acompañamiento Pedagógico</span>
+                                <span class="text-2xl transition-transform duration-300 transform">+</span>
+                            </button>
+                            <div class="accordion-content hidden px-6 py-4 text-slate-300 border-t border-slate-700 bg-slate-800/50 leading-relaxed">
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>Asistencia directa en el aula a docentes de otras áreas.</li>
+                                    <li>Capacitación en uso de Moodle, Classroom, y herramientas interactivas.</li>
+                                    <li>Impulso de propuestas de Gamificación y proyectos STEAM transversales.</li>
+                                    <li>Capacitación continua para reducir la brecha digital docente.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="border border-slate-700 rounded-xl overflow-hidden bg-slate-800 transition-all">
+                            <button class="accordion-btn w-full px-6 py-4 text-left font-bold text-lg flex justify-between items-center focus:outline-none hover:bg-slate-700">
+                                <span>Gestión Google Workspace</span>
+                                <span class="text-2xl transition-transform duration-300 transform">+</span>
+                            </button>
+                            <div class="accordion-content hidden px-6 py-4 text-slate-300 border-t border-slate-700 bg-slate-800/50 leading-relaxed">
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>Configuración, administración y permisos de Google Classroom.</li>
+                                    <li>Monitoreo de seguridad digital (2FA) y almacenamiento en Drive.</li>
+                                    <li>Administración de cuentas institucionales y unidades organizativas.</li>
+                                    <li>Soporte técnico directo a usuarios.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="border border-slate-700 rounded-xl overflow-hidden bg-slate-800 transition-all">
+                            <button class="accordion-btn w-full px-6 py-4 text-left font-bold text-lg flex justify-between items-center focus:outline-none hover:bg-slate-700">
+                                <span>Sitio Web y Recursos Físicos</span>
+                                <span class="text-2xl transition-transform duration-300 transform">+</span>
+                            </button>
+                            <div class="accordion-content hidden px-6 py-4 text-slate-300 border-t border-slate-700 bg-slate-800/50 leading-relaxed">
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>Supervisión del laboratorio de informática y mantenimiento de hardware.</li>
+                                    <li>Gestión y custodia de los Kits Arduino e insumos robóticos.</li>
+                                    <li>Gestión de la comunicación con servidores ante incidencias.</li>
+                                    <li>Actualización permanente del sitio web del colegio y novedades institucionales.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="border border-slate-700 rounded-xl overflow-hidden bg-slate-800 transition-all">
+                            <button class="accordion-btn w-full px-6 py-4 text-left font-bold text-lg flex justify-between items-center focus:outline-none hover:bg-slate-700">
+                                <span>Equipo Docente</span>
+                                <span class="text-2xl transition-transform duration-300 transform">+</span>
+                            </button>
+                            <div class="accordion-content hidden px-6 py-4 text-slate-300 border-t border-slate-700 bg-slate-800/50 leading-relaxed">
+                                <p class="mb-2"><strong>Nivel Primario:</strong> Mayra Farias, María Lucía Minoldo, Roberto Medina.</p>
+                                <p><strong>Nivel Secundario:</strong> Mártit Acuña, Gastón Ferreyra, Pablo Fala, Alejandra Sánchez, Zulema Perez, y equipo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 py-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-slate-500 text-sm">
+                Colegio San José - Proyecto Anual de Informática 2026<br>
+                "Luces de Mejora"
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navbar = document.getElementById('navbar');
+
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.remove('shadow-sm');
+                } else {
+                    navbar.classList.add('shadow-sm');
+                    navbar.classList.remove('shadow-md');
+                }
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    mobileMenu.classList.add('hidden');
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement){
+                        const navHeight = navbar.offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            const tabBtns = document.querySelectorAll('#tab-buttons button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => {
+                        b.classList.remove('bg-red-600', 'text-white', 'shadow-md', 'border-red-600');
+                        b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                    });
+                    
+                    btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+                    btn.classList.add('bg-red-600', 'text-white', 'shadow-md', 'border-red-600');
+
+                    const targetId = btn.getAttribute('data-target');
+                    tabContents.forEach(content => {
+                        if(content.id === targetId) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            const projectsData = [
+                { curso: "1º", titulo: "Resolución de Problemas con Scratch", docentes: "Alejandra Sánchez", periodo: "Segundo semestre", categoria: "Programación/Web" },
+                { curso: "2º", titulo: "Arduino. Simulación en Tinkercad", docentes: "A. Sánchez, Farías", periodo: "Agosto- Setiembre", categoria: "Robótica" },
+                { curso: "2º", titulo: "Reel de parábolas", docentes: "M. Sanchez, Malo, Farías", periodo: "Mayo Junio", categoria: "Simulación/Audiovisual" },
+                { curso: "2º", titulo: "Viaje a Mendoza (Digital)", docentes: "Z. Perez, M. Farías", periodo: "Setiembre Octubre", categoria: "Simulación/Audiovisual" },
+                { curso: "3º", titulo: "Sustentics. Juegos de simulación", docentes: "Faría, Módica, Ibarra...", periodo: "Abril a junio", categoria: "Simulación/Audiovisual" },
+                { curso: "3º", titulo: "Documental", docentes: "Farías, Sanchez, Turturro...", periodo: "Abril a agosto", categoria: "Simulación/Audiovisual" },
+                { curso: "4º", titulo: "Control de Huerta Arduino", docentes: "Farías, Acuña", periodo: "Abril a julio", categoria: "Robótica" },
+                { curso: "4º", titulo: "HTML CSS (Puerto Madryn)", docentes: "Farías", periodo: "Octubre y noviembre", categoria: "Programación/Web" },
+                { curso: "4º", titulo: "COPA ROBÓTICA EDUCABOT 2026", docentes: "Farías", periodo: "Abril agosto", categoria: "Robótica" },
+                { curso: "5º", titulo: "Perfil atmosférico y microcontaminantes (Python, HTML, CSS, JS)", docentes: "Ferreyra", periodo: "Abril a julio", categoria: "Programación/Web" },
+                { curso: "5º", titulo: "CANSAT CONAE", docentes: "Ferreyra", periodo: "Abril a setiembre", categoria: "Robótica" },
+                { curso: "5º", titulo: "COPA ROBÓTICA EDUCABOT 2026", docentes: "Ferreyra", periodo: "Abril agosto", categoria: "Robótica" },
+                { curso: "5º", titulo: "Anuario Revista (Python, HTML, CSS, JS)", docentes: "Acuña, Marit", periodo: "Marzo a noviembre", categoria: "Programación/Web" },
+                { curso: "6º", titulo: "CANSAT (Videos)", docentes: "Fala", periodo: "Abril", categoria: "Robótica" },
+                { curso: "6º", titulo: "Stock - Ventas (Fiesta de la familia)", docentes: "Acuña, Fala", periodo: "Marzo a junio", categoria: "Programación/Web" },
+                { curso: "6º", titulo: "App para Vaso (Inventario, Turnero)", docentes: "Acuña, Fala", periodo: "Julio a noviembre", categoria: "Programación/Web" },
+                { curso: "6º A", titulo: "Patrimonio Cultural de Córdoba", docentes: "Roccetti, Farías", periodo: "Marzo a agosto", categoria: "Simulación/Audiovisual" }
+            ];
+
+            const tableBody = document.getElementById('projects-table-body');
+            const emptyState = document.getElementById('empty-state');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            function renderTable(data) {
+                tableBody.innerHTML = '';
+                if(data.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    tableBody.parentElement.classList.add('hidden');
+                } else {
+                    emptyState.classList.add('hidden');
+                    tableBody.parentElement.classList.remove('hidden');
+                    data.forEach(item => {
+                        let catColor = "bg-slate-100 text-slate-700";
+                        if(item.categoria === "Robótica") catColor = "bg-red-100 text-red-700";
+                        if(item.categoria === "Programación/Web") catColor = "bg-amber-100 text-amber-700";
+                        if(item.categoria === "Simulación/Audiovisual") catColor = "bg-orange-100 text-orange-700";
+
+                        const row = `
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900">${item.curso}</td>
+                                <td class="px-6 py-4 text-sm text-slate-800">
+                                    <div class="font-medium">${item.titulo}</div>
+                                    <span class="inline-flex items-center mt-1 px-2 py-0.5 rounded text-xs font-medium ${catColor}">
+                                        ${item.categoria}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600 hidden md:table-cell">${item.docentes}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">${item.periodo}</td>
+                            </tr>
+                        `;
+                        tableBody.innerHTML += row;
+                    });
+                }
+            }
+
+            renderTable(projectsData);
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-red-600', 'text-white', 'active');
+                        b.classList.add('bg-white', 'text-slate-600');
+                    });
+                    
+                    e.target.classList.remove('bg-white', 'text-slate-600');
+                    e.target.classList.add('bg-red-600', 'text-white', 'active');
+
+                    const filterValue = e.target.getAttribute('data-filter');
+                    if(filterValue === 'Todos') {
+                        renderTable(projectsData);
+                    } else {
+                        const filtered = projectsData.filter(p => p.categoria === filterValue);
+                        renderTable(filtered);
+                    }
+                });
+            });
+
+            const ctx = document.getElementById('projectsChart').getContext('2d');
+            
+            const counts = {
+                "Robótica": projectsData.filter(p => p.categoria === "Robótica").length,
+                "Programación/Web": projectsData.filter(p => p.categoria === "Programación/Web").length,
+                "Simulación/Audiovisual": projectsData.filter(p => p.categoria === "Simulación/Audiovisual").length
+            };
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(counts),
+                    datasets: [{
+                        data: Object.values(counts),
+                        backgroundColor: [
+                            '#dc2626',
+                            '#f59e0b', 
+                            '#ea580c'  
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: { family: "'Inter', sans-serif", size: 12 },
+                                color: '#475569'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            padding: 12,
+                            titleFont: { family: "'Inter', sans-serif", size: 13 },
+                            bodyFont: { family: "'Inter', sans-serif", size: 14 }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+
+            const accordions = document.querySelectorAll('.accordion-btn');
+            accordions.forEach(acc => {
+                acc.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('span:last-child');
+                    
+                    if (content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        icon.textContent = '−';
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        content.classList.add('hidden');
+                        icon.textContent = '+';
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
