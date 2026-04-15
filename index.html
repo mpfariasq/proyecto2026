@@ -607,25 +607,31 @@ de la trama sociocultural que habitamos cotidianamente en las instituciones educ
                 });
             });
 
-            const projectsData = [
-                { curso: "1º", titulo: "Resolución de Problemas con Scratch", docentes: "Alejandra Sánchez", periodo: "Segundo semestre", categoria: "Programación/Web" },
-                { curso: "2º", titulo: "Arduino. Simulación en Tinkercad", docentes: "A. Sánchez, Farías", periodo: "Agosto- Setiembre", categoria: "Robótica" },
-                { curso: "2º", titulo: "Reel de parábolas", docentes: "M. Sanchez, Malo, Farías", periodo: "Mayo Junio", categoria: "Simulación/Audiovisual" },
-                { curso: "2º", titulo: "Viaje a Mendoza (Digital)", docentes: "Z. Perez, M. Farías", periodo: "Setiembre Octubre", categoria: "Simulación/Audiovisual" },
-                { curso: "3º", titulo: "Sustentics. Juegos de simulación", docentes: "Faría, Módica, Ibarra...", periodo: "Abril a junio", categoria: "Simulación/Audiovisual" },
-                { curso: "3º", titulo: "Documental", docentes: "Farías, Sanchez, Turturro...", periodo: "Abril a agosto", categoria: "Simulación/Audiovisual" },
-                { curso: "4º", titulo: "Control de Huerta Arduino", docentes: "Farías, Acuña", periodo: "Abril a julio", categoria: "Robótica" },
-                { curso: "4º", titulo: "HTML CSS (Puerto Madryn)", docentes: "Farías", periodo: "Octubre y noviembre", categoria: "Programación/Web" },
-                { curso: "4º", titulo: "COPA ROBÓTICA EDUCABOT 2026", docentes: "Farías", periodo: "Abril agosto", categoria: "Robótica" },
-                { curso: "5º", titulo: "Perfil atmosférico y microcontaminantes (Python, HTML, CSS, JS)", docentes: "Ferreyra", periodo: "Abril a julio", categoria: "Programación/Web" },
-                { curso: "5º", titulo: "CANSAT CONAE", docentes: "Ferreyra", periodo: "Abril a setiembre", categoria: "Robótica" },
-                { curso: "5º", titulo: "COPA ROBÓTICA EDUCABOT 2026", docentes: "Ferreyra", periodo: "Abril agosto", categoria: "Robótica" },
-                { curso: "5º", titulo: "Anuario Revista (Python, HTML, CSS, JS)", docentes: "Acuña, Marit", periodo: "Marzo a noviembre", categoria: "Programación/Web" },
-                { curso: "6º", titulo: "CANSAT (Videos)", docentes: "Fala", periodo: "Abril", categoria: "Robótica" },
-                { curso: "6º", titulo: "Stock - Ventas (Fiesta de la familia)Logo y lema", docentes: "Acuña, Fala", periodo: "Marzo a junio", categoria: "Programación/Web" },
-                { curso: "6º", titulo: "App para Vaso (Inventario, Turnero)", docentes: "Acuña, Fala", periodo: "Julio a noviembre", categoria: "Programación/Web" },
-                { curso: "6º A", titulo: "Patrimonio Cultural de Córdoba", docentes: "Roccetti, Farías", periodo: "Marzo a agosto", categoria: "Simulación/Audiovisual" }
+           const projectsData = [
+                { curso: "1º", titulo: "Resolución de Problemas con Scratch", docentes: "Alejandra Sánchez", periodo: "Semestre 2", categoria: "Programación/Web" },
+                { curso: "2º", titulo: "Arduino. Simulación en Tinkercad", docentes: "A. Sánchez – Farías", periodo: "Ago - Set", categoria: "Robótica" },
+                { curso: "2º", titulo: "Reel de parábolas", docentes: "M. Sanchez, Malo, Farías", periodo: "May - Jun", categoria: "Simulación/Audiovisual" },
+                { curso: "2º A/B", titulo: "Viaje a Mendoza (Digital)", docentes: "Z. Perez, M. Farías", periodo: "Set - Oct", categoria: "Simulación/Audiovisual" },
+                { curso: "3º A/B", titulo: "Sustentics. Juegos de simulación", docentes: "Faría, Módica, Ibarra, Galdame, Echavarría", periodo: "May - Jul", categoria: "Simulación/Audiovisual" },
+                { curso: "3º A/B", titulo: "Documental", docentes: "Farías, Sanchez, Sanchez, Malo, Turturro", periodo: "Abr - Ago", categoria: "Simulación/Audiovisual" },
+                { curso: "4º A", titulo: "Canva. Intervención de imágenes", docentes: "Farías, Gambarte, Buteler", periodo: "Abr - Jun", categoria: "Simulación/Audiovisual" },
+                { curso: "4º B", titulo: "Control de Huerta Arduino", docentes: "Farías, Acuña", periodo: "Abr - Jul", categoria: "Robótica" },
+                { curso: "4º B", titulo: "HTML CSS. Puerto Madryn", docentes: "Farías", periodo: "Oct - Nov", categoria: "Programación/Web" },
+                { curso: "4º B", titulo: "Canva Logo. Identidad y colores", docentes: "Farías, Garate", periodo: "Setiembre", categoria: "Simulación/Audiovisual" },
+                { curso: "4º B", titulo: "COPA ROBÓTICA EDUCABOT 2026", docentes: "Farías", periodo: "Abr - Ago", categoria: "Robótica" },
+                { curso: "5º A", titulo: "Audiovisuales Identidad Nacional", docentes: "Farías, Galdame, Garate", periodo: "Oct - Nov", categoria: "Simulación/Audiovisual" },
+                { curso: "5º B", titulo: "Perfil atmosférico y microcontaminantes (Python)", docentes: "Ferreyra", periodo: "Abr - Jul", categoria: "Programación/Web" },
+                { curso: "5º B", titulo: "CANSAT CONAE", docentes: "Ferreyra", periodo: "Abr - Set", categoria: "Robótica" },
+                { curso: "5º B", titulo: "COPA ROBÓTICA EDUCABOT 2026", docentes: "Ferreyra", periodo: "Abr - Ago", categoria: "Robótica" },
+                { curso: "5º B", titulo: "PYTHON - HTML CSS PHP JAVASCRIPT (Anuario)", docentes: "Acuña Marit", periodo: "Mar - Nov", categoria: "Programación/Web" },
+                { curso: "6º B", titulo: "CANSAT (Videos p/ CONAE)", docentes: "Fala", periodo: "Abril", categoria: "Robótica" },
+                { curso: "6º B", titulo: "Video Presentación & Videopoemas", docentes: "Fala", periodo: "May - Jun", categoria: "Simulación/Audiovisual" },
+                { curso: "6º B", titulo: "Fotografía: Mapeo y Fotorreportajes", docentes: "Fala", periodo: "Set - Nov", categoria: "Simulación/Audiovisual" },
+                { curso: "6º B", titulo: "Fiesta Familia: Stock, Ventas, Logo y Lema", docentes: "Acuña, Fala, Garate", periodo: "Mar - Jun", categoria: "Programación/Web" },
+                { curso: "6º B", titulo: "App Vaso (Inventario, Turnero)", docentes: "Acuña, Fala", periodo: "Jul - Nov", categoria: "Programación/Web" },
+                { curso: "6º A", titulo: "Patrimonio Cultural de Córdoba", docentes: "Roccetti, Farías", periodo: "Mar - Ago", categoria: "Simulación/Audiovisual" }
             ];
+
 
             const tableBody = document.getElementById('projects-table-body');
             const emptyState = document.getElementById('empty-state');
